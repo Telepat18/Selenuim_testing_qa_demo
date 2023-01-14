@@ -19,4 +19,11 @@ class TestElements:
         assert permanent_address == output_permanent_address
         time.sleep(5)
 
-
+    def test_check_box(self):
+        check_box_page = CheckBox(self.driver)
+        check_box_page.find_item().click()
+        check_box_page.find_expand_all().click()
+        check_box_page.click_random_checkbox()
+        actual_result_text = check_box_page.find_text()
+        expected_result_text = check_box_page.EXPECTED_TEXT
+        assert actual_result_text == expected_result_text
