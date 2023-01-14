@@ -49,7 +49,7 @@ class Elements(SeleniumBase):
         self.email_field().send_keys(email)
         self.current_address_field().send_keys(current_address)
         self.permanent_address_field().send_keys(permanent_address)
-        self.submit_button()
+        self.submit_button().click()
         return full_name, email, current_address, permanent_address
 
     def text_name(self):
