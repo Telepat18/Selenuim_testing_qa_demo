@@ -1,6 +1,6 @@
 import random
 
-from selenium_base_new.base import SeleniumBase
+from selenium_base.base import SeleniumBase
 
 
 class CheckBox(SeleniumBase):
@@ -17,7 +17,7 @@ class CheckBox(SeleniumBase):
                               'Angular', 'Veu', 'Office', 'Public', 'Private', 'Classified', 'General',
                               'Downloads', 'Word File.doc', 'Excel File.doc']
         self.CHECKED_ITEMS = 'svg[class="rct-icon rct-icon-check"]'
-        self.TITLE_ITEM = './/ancestor::span[@class="rct-title"]'
+        self.TITLE_ITEM = 'svg[class="rct-icon rct-icon-check"]'
 
 
     def find_item(self):
@@ -53,9 +53,11 @@ class CheckBox(SeleniumBase):
 
     def get_checked_items(self):
         checked_list = self.are_present('css', self.CHECKED_ITEMS)
+
         data = []
         for box in checked_list:
-            title_item = box.find_element_by_xpath(self.TITLE_ITEM)
+            title_item = self.is_present('css', self.TITLE_ITEM)
+            box = title_item
             data.append(title_item.text)
         return data
 
