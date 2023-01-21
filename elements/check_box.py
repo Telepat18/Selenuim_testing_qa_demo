@@ -13,12 +13,12 @@ class CheckBox(SeleniumBase):
         self.collapse_all = 'button[title="Collapse all"]'
         self.home_checkbox = 'label[for="tree-node-home"]'
         self.checkboxes_list = 'span[class="rct-title"]'
-        self.EXPECTED_TEXT = ['Home', 'Desktop', 'Notes', 'Commands', 'Documents', 'WorkSpace', 'React',
+        self.expected_text = ['Home', 'Desktop', 'Notes', 'Commands', 'Documents', 'WorkSpace', 'React',
                               'Angular', 'Veu', 'Office', 'Public', 'Private', 'Classified', 'General',
                               'Downloads', 'Word File.doc', 'Excel File.doc']
-        self.CHECKED_ITEMS = 'svg[class="rct-icon rct-icon-check"]'
-        self.TITLE_ITEM = 'svg[class="rct-icon rct-icon-check"]'
-
+        self.checked_items = 'svg[class="rct-icon rct-icon-check"]'
+        self.title_item = ".//ancestor::span[@class='rct-text']"
+        self.output_text = 'span[class="text-success"]'
 
     def find_item(self):
         return self.is_visible('css', self.item_one, 'Check Box Item View')
@@ -51,13 +51,19 @@ class CheckBox(SeleniumBase):
             else:
                 break
 
-    def get_checked_items(self):
-        checked_list = self.are_present('css', self.CHECKED_ITEMS)
+    def get_checked_checkboxes(self):
+        checked_list = self.are_present('css', self.checked_items)
 
         data = []
         for box in checked_list:
-            title_item = self.is_present('css', self.TITLE_ITEM)
-            box = title_item
+            title_item = box.find_element("xpath", self.title_item)
             data.append(title_item.text)
-        return data
+        return str(data).replace(' ', '').replace('doc', '').replace('.', '').lower()
 
+    def get_output_result(self):
+        result_list = self.are_present('css', self.output_text)
+
+        data = []
+        for item in result_list:
+            data.append(item.text)
+        return str(data).replace(' ', '').lower()

@@ -19,6 +19,12 @@ class WebTablesPage(SeleniumBase):
         self.department_field = 'input[id="department"]'
         self.submit_button = 'button[id="submit"]'
         self.table_item = 'div[class="rt-tr-group"]'
+        self.search_box = 'input[id="searchBox"]'
+        self.delete_icon = 'span[title="Delete"]'
+        self.row_parent = ".//ancestor::div[@class='rt-tr-group']"
+        self.update_button = 'span[title="Edit"]'
+        self.not_found = 'div[class="rt-noData"]'
+        self.no_rows_found_text = 'No rows found'
 
     def find_item_three(self):
         return self.is_visible('css', self.item_three)
@@ -74,3 +80,26 @@ class WebTablesPage(SeleniumBase):
         for item in table_element:
             data.append(item.text.splitlines())
         return data
+
+    def search_person(self, key_word):
+        return self.is_visible('css', self.search_box).send_keys(key_word)
+
+    def check_person(self):
+        delete_button = self.is_visible('css', self.delete_icon)
+        row = delete_button.find_element("xpath", self.row_parent)
+        return row.text.splitlines()
+
+    def update_person_info(self):
+        person_info = next(create_person())
+        age = person_info.age
+        self.is_visible('css', self.update_button).click()
+        self.is_visible('css', self.age_field).clear()
+        self.is_visible('css', self.age_field).send_keys(age)
+        self.is_visible('css', self.submit_button).click()
+        return str(age)
+
+    def delete_person(self):
+        self.is_visible('css', self.delete_icon).click()
+
+    def check_deleted(self):
+        return self.is_present('css', self.not_found).text
