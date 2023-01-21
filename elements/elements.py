@@ -1,6 +1,5 @@
 from generator.generator import generated_person
 from selenium_base.base import SeleniumBase
-import random
 
 
 class Elements(SeleniumBase):
@@ -65,4 +64,3 @@ class Elements(SeleniumBase):
         output_current_address = self.text_current_address().text.split(':')[1]
         output_permanent_address = self.text_permanent_address().text.split(':')[1]
         return output_name, output_email, output_current_address, output_permanent_address
-

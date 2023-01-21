@@ -3,6 +3,7 @@ import time
 
 import pytest
 
+from elements.buttons import Buttons
 from elements.check_box import CheckBox
 from elements.elements import Elements
 from elements.radio_button import RadioButton
@@ -84,3 +85,19 @@ class TestElements:
         web_tables_page.delete_person()
         text = web_tables_page.check_deleted()
         assert text == web_tables_page.no_rows_found_text
+
+    def test_web_table_change_count_row(self):
+        web_tables_page = WebTablesPage(self.driver)
+        web_tables_page.find_item_three().click()
+        count = web_tables_page.select_up_to_some_rows()
+        assert count == [5, 10, 20, 25, 50, 100]
+
+    def test_click_on_different_button(self):
+        button_page = Buttons(self.driver)
+        button_page.find_button_item()
+        double = button_page.click_on_different_buttons("double")
+        right = button_page.click_on_different_buttons("right")
+        click = button_page.click_on_different_buttons("click")
+        assert double == button_page.double_text
+        assert right == button_page.right_text
+        assert click == button_page.click_text

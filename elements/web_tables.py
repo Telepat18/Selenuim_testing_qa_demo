@@ -25,6 +25,8 @@ class WebTablesPage(SeleniumBase):
         self.update_button = 'span[title="Edit"]'
         self.not_found = 'div[class="rt-noData"]'
         self.no_rows_found_text = 'No rows found'
+        self.count_row_list = 'select[aria-label="rows per page"]'
+        self.full_list = 'div[class="rt-tbody"]'
 
     def find_item_three(self):
         return self.is_visible('css', self.item_three)
@@ -103,3 +105,18 @@ class WebTablesPage(SeleniumBase):
 
     def check_deleted(self):
         return self.is_present('css', self.not_found).text
+
+    def select_up_to_some_rows(self):
+        count = [5, 10, 20, 25, 50, 100]
+        data = []
+        for i in count:
+            count_row_button = self.is_present('css', self.count_row_list)
+            self.go_to_element(count_row_button)
+            count_row_button.click()
+            self.is_visible('css', f'option[value="{i}"]').click()
+            data.append(self.check_count_rows())
+        return data
+
+    def check_count_rows(self):
+        list_rows = self.are_present('css', self.full_list)
+        return len(list_rows)
