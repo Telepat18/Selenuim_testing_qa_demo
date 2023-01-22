@@ -60,3 +60,4 @@ class SeleniumBase:
         action = ActionChains(self.driver)
         action.context_click(element)
         action.perform()
+

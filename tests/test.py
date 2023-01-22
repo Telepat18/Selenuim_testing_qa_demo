@@ -6,6 +6,7 @@ import pytest
 from elements.buttons import Buttons
 from elements.check_box import CheckBox
 from elements.elements import Elements
+from elements.links import LinksPage
 from elements.radio_button import RadioButton
 from elements.web_tables import WebTablesPage
 
@@ -101,3 +102,18 @@ class TestElements:
         assert double == button_page.double_text
         assert right == button_page.right_text
         assert click == button_page.click_text
+
+    def test_check_link(self):
+        link_page = LinksPage(self.driver)
+        link_page.find_link_item().click()
+        href_link, current_url = link_page.check_new_tab_simple_link()
+        assert href_link == current_url
+
+    def test_broken_link(self):
+        link_page = LinksPage(self.driver)
+        link_page.find_link_item().click()
+        response_code = link_page.check_broken_link('https://demoqa.com/bad-request')
+        assert response_code == 400
+
+    def test_upload_file(self):
+        pass
