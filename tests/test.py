@@ -8,6 +8,7 @@ from elements.check_box import CheckBox
 from elements.elements import Elements
 from elements.links import LinksPage
 from elements.radio_button import RadioButton
+from elements.upload_download import UploadDownloadPage
 from elements.web_tables import WebTablesPage
 
 
@@ -116,4 +117,13 @@ class TestElements:
         assert response_code == 400
 
     def test_upload_file(self):
-        pass
+        upload_download_page = UploadDownloadPage(self.driver)
+        upload_download_page.find_upload_item()
+        file_name, result = upload_download_page.find_upload_file()
+        assert file_name == result
+
+    def test_download_file(self):
+        upload_download_page = UploadDownloadPage(self.driver)
+        upload_download_page.find_upload_item()
+        check = upload_download_page.find_download_file()
+        assert check is True

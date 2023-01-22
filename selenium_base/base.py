@@ -1,9 +1,7 @@
 from selenium.webdriver import ActionChains
 from selenium.webdriver.common.by import By
-from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as ec
 from selenium.webdriver.support.ui import WebDriverWait
-from typing import List
 
 
 class SeleniumBase:
@@ -26,21 +24,21 @@ class SeleniumBase:
         }
         return locating[find_by]
 
-    def is_visible(self, find_by: str, locator, locator_name: str = None) -> WebElement:
+    def is_visible(self, find_by: str, locator, locator_name: str = None):
         return self.wait.until(ec.visibility_of_element_located((self.get_selenium_by(find_by), locator)), locator_name)
 
     def is_present(self, find_by: str, locator: str, locator_name: str = None):
         return self.wait.until(ec.presence_of_element_located((self.get_selenium_by(find_by), locator)), locator_name)
 
-    def is_not_present(self, find_by: str, locator: str, locator_name: str = None) -> WebElement:
+    def is_not_present(self, find_by: str, locator: str, locator_name: str = None):
         return self.wait.until(ec.invisibility_of_element_located((self.get_selenium_by(find_by), locator)),
                                locator_name)
 
-    def are_visible(self, find_by: str, locator: str, locator_name: str = None) -> List[WebElement]:
+    def are_visible(self, find_by: str, locator: str, locator_name: str = None):
         return self.wait.until(ec.visibility_of_all_elements_located((self.get_selenium_by(find_by), locator)),
                                locator_name)
 
-    def are_present(self, find_by: str, locator: str, locator_name: str = None) -> List[WebElement]:
+    def are_present(self, find_by: str, locator: str, locator_name: str = None):
         return self.wait.until(ec.presence_of_all_elements_located((self.get_selenium_by(find_by), locator)),
                                locator_name)
 
