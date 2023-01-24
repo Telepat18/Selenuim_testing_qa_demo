@@ -104,26 +104,32 @@ class TestElements:
         assert right == button_page.right_text
         assert click == button_page.click_text
 
-    def test_check_link(self):
-        link_page = LinksPage(self.driver)
-        link_page.find_link_item().click()
-        href_link, current_url = link_page.check_new_tab_simple_link()
+    def test_simple_link(self):
+        links_page = LinksPage(self.driver)
+        links_page.find_link_item().click()
+        href_link, current_url = links_page.check_new_tab_simple_link()
         assert href_link == current_url
 
-    def test_broken_link(self):
-        link_page = LinksPage(self.driver)
-        link_page.find_link_item().click()
-        response_code = link_page.check_broken_link('https://demoqa.com/bad-request')
+    def test_bad_request(self):
+        links_page = LinksPage(self.driver)
+        links_page.find_link_item().click()
+        response_code = links_page.check_bad_request('https://demoqa.com/bad-request')
         assert response_code == 400
+
+    def test_created(self):
+        links_page = LinksPage(self.driver)
+        links_page.find_link_item().click()
+        response_code = links_page.check_created('https://demoqa.com/created')
+        assert response_code == 201
 
     def test_upload_file(self):
         upload_download_page = UploadDownloadPage(self.driver)
         upload_download_page.find_upload_item()
-        file_name, result = upload_download_page.find_upload_file()
+        file_name, result = upload_download_page.upload_files()
         assert file_name == result
 
     def test_download_file(self):
         upload_download_page = UploadDownloadPage(self.driver)
         upload_download_page.find_upload_item()
-        check = upload_download_page.find_download_file()
+        check = upload_download_page.download_files()
         assert check is True
