@@ -21,10 +21,13 @@ def get_webdriver(get_chrome_options):
 @pytest.fixture(scope='function')
 def setup(request, get_webdriver):
     driver = get_webdriver
-    url = 'https://demoqa.com/text-box'
+    url = 'https://demoqa.com/automation-practice-form'
     if request.cls is not None:
         request.cls.driver = driver
     driver.get(url)
+    driver.execute_script("document.body.style.zoom='50%'")
+    driver.execute_script("document.getElementsByTagName('footer')[0].remove();")
+    driver.execute_script("document.getElementsById('close-fixedban').remove();")
     yield driver
     driver.close()  # закрывает вкладку
     driver.quit()  # закрывает браузер

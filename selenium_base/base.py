@@ -8,7 +8,7 @@ class SeleniumBase:
 
     def __init__(self, driver):
         self.driver = driver
-        self.wait = WebDriverWait(driver, 15, 0.3)
+        self.wait = WebDriverWait(driver, 15)
 
     @staticmethod
     def get_selenium_by(find_by) -> dict:
@@ -44,10 +44,13 @@ class SeleniumBase:
 
     def element_is_clickable(self, find_by: str, locator, locator_name: str = None):
         return self.wait.until(ec.element_to_be_clickable((self.get_selenium_by(find_by), locator)),
-                               locator_name).click()
+                               locator_name)
 
     def go_to_element(self, element):
         self.driver.execute_script("arguments[0].scrollIntoView();", element)
+
+    def click_on_element(self, element):
+        self.driver.execute_script("arguments[0].click();", element)
 
     def action_double_click(self, element):
         action = ActionChains(self.driver)
@@ -59,3 +62,10 @@ class SeleniumBase:
         action.context_click(element)
         action.perform()
 
+    def action_move_to_element(self, element):
+        action = ActionChains(self.driver)
+        action.move_to_element(element)
+        action.perform()
+
+    # def remove_footer(self):
+    #

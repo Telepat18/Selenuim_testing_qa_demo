@@ -1,4 +1,5 @@
 import random
+
 from faker import Faker
 
 from data.data import People, Person

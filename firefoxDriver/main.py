@@ -1,6 +1,6 @@
-from selenium import webdriver
 import time
 
+from selenium import webdriver
 
 url = "https://www.instagram.com/"
 driver = webdriver.Firefox(executable_path="/Users/proarea/PycharmProjects/Selenium/firefoxDriver/geckodriver")

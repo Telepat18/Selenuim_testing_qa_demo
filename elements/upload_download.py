@@ -1,7 +1,6 @@
 import base64
 import os
 import random
-import time
 
 from generator.generator import generated_file
 from selenium_base.base import SeleniumBase

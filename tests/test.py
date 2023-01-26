@@ -5,9 +5,12 @@ import pytest
 
 from elements.buttons import Buttons
 from elements.check_box import CheckBox
+from elements.dynamic_properties import DynamicPropertiesPage
 from elements.elements import Elements
 from elements.links import LinksPage
 from elements.radio_button import RadioButton
+from elements.select_menu import SelectMenuPage
+from elements.test_form import TestFormPage
 from elements.upload_download import UploadDownloadPage
 from elements.web_tables import WebTablesPage
 
@@ -133,3 +136,32 @@ class TestElements:
         upload_download_page.find_upload_item()
         check = upload_download_page.download_files()
         assert check is True
+
+    def test_for_enable_button(self):
+        properties_page = DynamicPropertiesPage(self.driver)
+        properties_page.find_properties_item()
+        time.sleep(5)
+        enable = properties_page.check_enable_button()
+        assert enable is True
+
+    def test_for_appear_button(self):
+        properties_page = DynamicPropertiesPage(self.driver)
+        properties_page.find_properties_item()
+        color_before, color_after = properties_page.check_color_button()
+        assert color_before != color_after
+        assert color_before == properties_page.expected_color_before
+        assert color_after == properties_page.expected_color_after
+
+    def test_dynamic_properties(self):
+        properties_page = DynamicPropertiesPage(self.driver)
+        properties_page.find_properties_item()
+
+    def test_dropdown(self):
+        dropdown_page = SelectMenuPage(self.driver)
+        dropdown_page.find_dropdown()
+        time.sleep(10)
+
+    def test_form(self):
+        radio_button = TestFormPage(self.driver)
+        radio_button.find_radio_button()
+        time.sleep(10)

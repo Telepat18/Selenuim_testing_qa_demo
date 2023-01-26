@@ -18,6 +18,7 @@ class LinksPage(SeleniumBase):
         self.unauthorized = 'a[id="unauthorized"]'
         self.forbidden = 'a[id="forbidden"]'
         self.invalid_url = 'a[id="invalid-url"]'
+        self.link_href = 'url'
 
     def find_link_item(self):
         return self.is_visible('css', self.link_item)
@@ -28,7 +29,7 @@ class LinksPage(SeleniumBase):
         request = requests.get(link_href)
         if request.status_code == 200:
             simple.click()
-            self.driver.switch_to.window(self.driver.window_handless[1])
+            self.driver.switch_to.window(self.driver.window_handles[1])
             url = self.driver.current_url
             return link_href, url
         else:
@@ -47,5 +48,3 @@ class LinksPage(SeleniumBase):
             self.is_visible('css', self.created_link).click()
         else:
             return request.status_code
-
-
